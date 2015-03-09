@@ -18,7 +18,7 @@
 %----------------------------------------------------------------------------------------
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
-\documentclass[a0,portrait]{a0poster}
+\documentclass[a0,portrait,draft]{a0poster}
 \usepackage{multicol} % This is so we can have multiple columns of text side-by-side
 \columnsep=100pt % This is the amount of white space between the columns in the poster
 \columnseprule=3pt % This is the thickness of the black line between the columns in the poster
@@ -35,6 +35,7 @@
 \usepackage{amsfonts, amsmath, amsthm, amssymb} % For math fonts, symbols and environments
 \usepackage{wrapfig} % Allows wrapping text around tables and figures
 \usepackage{natbib}
+\newcommand{\jri}[1]{\textcolor{blue}{ \emph{\scriptsize  #1}} }
 
 \begin{document}
 
@@ -110,21 +111,21 @@ Genomic selection (GS) has gained popularity recently as the availability of gen
 \includegraphics[width=0.8\linewidth]{pvp.pdf}
 \captionof{figure}
 {\color{black} \textbf{Diallel experimental design and distribution of phenotypic data.}
-(A) Twelve maize inbred lines were selected and crossed in a partial diallel fashion without considering reciprocal effects. Ten of these inbreds (LH1, LH123HT, LH82, PH207, 4676A, PHG39, PHG47, PHG84, PHJ40, PHZ51) are proprietary inbreds that have expired from Plant Variety Protection (PVP) and represent the lineage of key heterotic germplasm pools used in present-day commercial corn hybrids. And two of them are predominant public inbreds, B73 and Mo17. (B) Phenotypic data were collected for anthesis-silking interval (ASI, in days), days to 50\% pollen shed (DTP), days to 50\% silking (DTS), ear height (EHT, in cm), grain yield adjusted to 15.5\% moisture (GY, in bu/A), plant height (PHT, in cm), and test weight (TW, in pounds).
+(A) Twelve maize inbred lines were selected and crossed in a half diallel. Ten of these (LH1, LH123HT, LH82, PH207, 4676A, PHG39, PHG47, PHG84, PHJ40, PHZ51) are proprietary inbreds that have expired from Plant Variety Protection (PVP) and represent the lineage of key heterotic germplasm pools used in present-day commercial corn hybrids. Two of them are important public inbreds, B73 and Mo17. (B) Phenotypic data were collected for anthesis-silking interval (ASI, in days), days to 50\% pollen shed (DTP), days to 50\% silking (DTS), ear height (EHT, in cm), grain yield adjusted to 15.5\% moisture (GY, in bu/A), plant height (PHT, in cm), and test weight (TW, in pounds). Analyses were carried out on the traits per se as well as percent high parent heterosis (pHPH). \jri{i've cut text throughout; you should make font larger}
 }
 \end{center}\vspace{1cm}
 
 \subsection*{Sequencing and SNP conservation annotation}
 %------------------
 % wet lab
-The DNAs from twelve inbred lines were isolated and sequenced to an average coverage of 10X. Read pairs kept after filtering were mapped to the maize B73 reference genome (AGPv2) with bwa-mem. Reads, with mapping quality (MAPQ) higher than 10 and with a best alignment score higher than the second best one, were kept for further analyses. After filtering, 13,782,809 were kept for further comparisons, including 1,909,416 genic SNPs and 361,280 in protein coding regions. Genome-wide deleterious variants were characterized by using genomic evolutionary rate profiling (GERP) \citep{Davydov2010}. For each position after multiple alignment, GERP scores were obtained by computing the regected substitutions subtracted by the neutral rate in a set of sequenced plant genomes. 
+All twelve inbreds were sequenced to an average depth of $\sim$10X. Reads were mapped to the maize B73 reference genome (AGPv2) with bwa-mem.  After filtering, 13.8M SNPs were kept for further comparisons, including 1.9M genic SNPs and 361,280 in protein coding regions. Genome-wide deleterious variants were characterized by using genomic evolutionary rate profiling (GERP) \citep{Davydov2010}. \jri{bibliography style can be extremely short. no need to list title, all authors, etc.}
 
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.8\linewidth]{gerp.pdf}
 \captionof{figure}{
-\color{black} \textbf{Conservation scores distribution of diallel SNPs and relationship between GERP and minor allele frequency.}
-(A) Among the $\sim$14 million SNPs identified in the diallel population, $\sim$1.2 million ($\sim$10\%) sites could obtain their evolutionary conservation information using GERP. Of these sites, 506,898 (42\%) are evolutionary constraint; variants at these sites were considered as deleterious.  
-(B) Mean GERP scores were calculated for each bin (bin size = 0.01) of minor allele frequency (MAF). The regression analysis indicated that variants at conserved sites tend to be maintained in a low frequency. Red line denotes regression line and grey lines define its 95\% confidence interval.}
+\color{black} \textbf{GERP distribution of SNPs and relationship between GERP and minor allele frequency.}
+(A) GERP scores were obtained for $\sim$1.2 million ($\sim$10\%) SNPs. Of these, 506,898 (42\%) were under evolutionary constraint and considered as deleterious variants. 
+(B) Mean GERP scores were calculated for each bin (bin size = 0.01) of minor allele frequency (MAF) shows that variants at conserved sites are maintained at low frequency. The red line and grey lines define the regression and its 95\% confidence interval.}
 \end{center}\vspace{1cm}
 
 %Figure GERP IBD
@@ -135,24 +136,27 @@ The DNAs from twelve inbred lines were isolated and sequenced to an average cove
 \includegraphics[width=1\linewidth]{gerpIBD.pdf}
 \captionof{figure}{
 \color{black} \textbf{Incoporation of conservation information into IBD blocks.}
-The SNPs in a IBD block were added up with their GERP scores as the conservation estimates, which were calculated with both additive and dominant models. Under the additive model, 2 x GERP score was assigned to the homozygous loci with non-reference SNP calls, 1 x GERP score was assigned to the heterozygous loci, and 0 was assigned to the homozygous loci with reference SNP calls. Under the dominant model, 1 x GERP score was assigned to both the homozygous loci with non-reference SNP calls and heterozygous loci, 0 was assigned to homozygous loci with reference SNP calls.}
+Regions of the genome that are identical by descent (IBD) among the 12 inbreds were identified using Beagle \jri{CITE}.  The GERP scores of SNPs in an IBD block were summed under both additive and dominant models. Under the additive model, 2 x GERP score was assigned to genotypes homozygous for the non-reference allele, 1 x GERP score was assigned to heterozygotes, and 0 was assigned to the homozygous reference genotype. Under the dominant model, 1 x GERP score was assigned to both genotypes with a nonreference allle and 0 to the homozygous reference genotype.}
 \end{center}\vspace{1cm}
+
+\subsection*{Genomic selection models}
+
+A Bayesian-based approach (BayesC) \citep{} \jri{add citation} was employed for the genomic selection (GS) experiments. \jri{need some explanation of the GS. mention you used 80\% in fitting and 20\% testing, how many runs you did, how many loci used each run, etc.  perhaps this goes in the methods and results starts with next paragraph}.  Circular permutations were used both considering all SNPs or considering only genic SNPs to control for differences between genic and nongenic regions.
 
 %----------------------------------------------------------------------------------------
 %	RESULTS 
 %----------------------------------------------------------------------------------------
 
+
 \section*{Results}
 
-A haplotype based genomic selection strategy was conceived by using conservation scores of the IBD blocks as the explanatory variables. SNP loci with GERP score $>$0 were considered as evolutionary conserved sites, and genomic variations detected at these sites were treated as deleterious. A Bayesian-based approach (BayesC) \citep{} was employed for the GS experiments. To rule out the possibility that prediction taking advantage of the more informative genic SNPs, the same set of genic SNPs were used for real and circular shuffled experiments.
-
-As a result, we found that for the trait per se, the prediction accuracies were singificantly improved for ASI, DTS and PHT with the additive model. Prediction accuracies were significantly improved for ASI, DTP, GY and TW with the dominant model. In general, the average prediction rates are higher using additive model (r = 0.8) than dominant model (r = 0.7). For the heterosis transformation traits, for example, percent high parental heterosis (pHPH), only one prediction rate was significantly increased for the GY pHPH. 
+For traits per se, model prediction accuracies were significantly improved for ASI, DTS and PHT when incorporating GERP score information under the additive model. Prediction accuracies were significantly improved for ASI, DTP, GY and TW under the dominant model. In general, the average prediction rates are higher using the additive model (r = 0.8) than the dominant model (r = 0.7). For heterosis incorporation of GERP scores only improved grain yield prediction and only under a dominant model.  
 
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.8\linewidth]{cvres.pdf}
 \captionof{figure}{
-\color{black} \textbf{Beanplots of the cross-validation accuracies.}
-The cross-validation experiments were conducted using genic SNPs and circular shuffled data from the same set of the genic SNPs for trait per se with additive model (A), trait per se with dominant model (B), pHPH with the additive model (C) and pHPH with the dominant model (D). Accuaries drived from the real data were plotted on the left side of the bean (blue) and accuracies derived from the circular shuffled data were plotted on the right side of the bean (grey). Horizotal bars on beans indicate the mean accuracies. Grey dashed line indicate overall average. Stars on top of the beans indicate significantly improved cross-validation accuracies.
+\color{black} \textbf{Beanplots of cross-validation accuracies.}
+Cross-validation experiments were conducted using genic SNPs and circular shuffled data from the same set of the genic SNPs for traits per se (A,B) and pHPH (C,D) under additive (A,C) and dominant (B,D) models.   Accuaries from  from the real data were plotted on the left side of the bean (blue) and permutation results plotted on the right (grey). Horizotal bars on beans indicate mean accuracies. The grey dashed line indicates the overall average accuracy. Stars indicate significantly improved cross-validation accuracies.
 }
 \end{center}\vspace{1cm}
 
@@ -165,10 +169,9 @@ The cross-validation experiments were conducted using genic SNPs and circular sh
 \section*{Conclusions}
 
 \begin{itemize}
-\item Large number (N=506,898) of deleterious alleles were identified in elite maize lines. The GERP enabled us to identify deleterious alleles beyond the protein coding region.
+\item More than 500,000 deleterious SNPs were identified in elite maize lines including in noncoding regions of the genome.
 \item A genomic selection pipeline was developed, which utilized evolutionary conservation information in the model.
-\item Cross-validation results suggested the prediction accuracies could be significantly improved for some of the traits with additive and dominant models. 
-
+\item Cross-validation results suggested prediction accuracies for some traits could be significantly improved by incorporating GERP scores. 
 
 \end{itemize}
 
@@ -179,8 +182,6 @@ The cross-validation experiments were conducted using genic SNPs and circular sh
 %----------------------------------------------------------------------------------------
 
 %\section*{Forthcoming Research}
-
-
 
 %----------------------------------------------------------------------------------------
 %	REFERENCES
@@ -196,7 +197,7 @@ The cross-validation experiments were conducted using genic SNPs and circular sh
 
 \section*{Acknowledgements}
 
-Thanks for the funding!
+Funding for this project comes from the USDA-AFRI, USDA Hatch, DuPont Pioneer, and N2 Genetics. We would like to thank Eli Rodgers-Melnick for allowing us to use his GERP rate estimations. 
 
 %----------------------------------------------------------------------------------------
 
